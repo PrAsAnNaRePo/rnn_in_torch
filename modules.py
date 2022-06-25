@@ -1,10 +1,15 @@
 import torch
 from torch import nn
 
+# initializing the base rnn for 2D compute...
+
 class RNNCell(nn.Module):
     
     def __init__(self, n_x, n_a, n_y):
         super(RNNCell, self).__init__()
+        
+        # set shapes..
+        
         self.n_x = n_x
         self.n_a = n_a
         self.n_y = n_y
@@ -22,6 +27,8 @@ class RNNCell(nn.Module):
         self.yt = self.softmax(self.Wya @ self.a_next + self.by)
         return self.a_next, self.yt
 
+ # main RNN class for compute 3D inputs.   
+ 
 class RNN(nn.Module):
     def __init__(self, n_x, n_a, t_x, m):
         super().__init__()
@@ -43,6 +50,8 @@ class RNN(nn.Module):
             self.a_next[:,:,i] = a0
             self.y_pred[:,:,i] = yt
         return self.a_next, self.y_pred
+
+# you could test by running following code. 
 
 # rnn = RNN(500, 5, 10, 2)
 # x = torch.rand((500, 2, 10))
